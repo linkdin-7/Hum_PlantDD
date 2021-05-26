@@ -18,7 +18,7 @@ y_pred=gnb.predict(X_test)
 indices = [i for i in range(89)]
 symptoms = df.columns.values[:-1]
 dictionary = dict(zip(symptoms,indices))
-print(accuracy_score(y_test, y_pred)*100)
+# print(accuracy_score(y_test, y_pred)*100)
 
 
 def dosomething(symptom):
