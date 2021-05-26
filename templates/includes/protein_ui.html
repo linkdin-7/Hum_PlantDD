@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <link rel="shortcut icon" href="static/icon.png" />
+  <title>ROBO-DOC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <style type="text/css">
+        body, html 
+        {
+            height: 100%;
+        background-image: url("https://media.istockphoto.com/photos/stethoscope-on-the-table-picture-id894125638?k=6&m=894125638&s=612x612&w=0&h=fNBGWtaIgsozReq8U9g-qFpty0KyT79oWfo-_aYapoM=");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+        .bg 
+        { 
+            <!--background-image: url("https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");-->
+            height: 100%; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            button: absolute;
+        }
+        .head 
+        {
+            color: white; 
+            font-family: sans-serif;
+            font-size: 30px;
+            border-bottom: double;
+            text-align: center;
+        }
+        
+        
+        .tablink 
+        {
+            background-color: #FEA127;
+            color: black;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            font-size: 17px;
+            width: 25%;
+        }
+
+        .tablink:hover
+        {
+            background-color: green;
+        }
+        
+        .tabcontent 
+        {
+            color: black;
+            display: none;
+            padding: 50px;
+            width: 855px;
+            position: relative;
+            height: 350px;
+        }
+        
+        #Protein 
+        {
+            
+            width: 600px; 
+            top:45px;
+            left: 50px;
+            height:350px;
+        }
+        
+        .w3-tangerine 
+        {
+            font-family: "Tangerine", serif;
+        }
+    </style>
+  </head>
+  <body>
+    {% block body%}
+    <center>
+    <div class="bg"> 
+      <br>
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                 <li><a href="/">Symptom-Disease</a></li>
+                   <li><a href="/protein_predict">Disease-Protein_ID</a></li>
+                 <li class="active"><a href="/protein_disease_predict">Protein_ID-Disease</a></li>
+                 <li><a href="/treatment_predict">Treatment</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                 <li class="active"><a href="/protein_disease_predict">Refresh</a></li>
+            </ul>
+          </div>
+        </nav>
+      <div>
+      <br><br>
+      <marquee behavior="scroll" direction="left" scrollamount="20"><center><span style="font-size:40px; text-shadow: 3px 3px 6px black;font-weight: bolder;font-family:'Garamound';color:red">ROBO DOC-Machine learning based disease diagnostic aid</span></center></marquee>
+      </div>
+        <button class="tablink" onclick="openTab('Protein', this, 'skyblue')" id="defaultOpen" style="width: 300px; position: absolute; top: 175px; left:580px; ">Protein checker</button>
+        <!-- <button class="tablink" onclick="openTab('Drug', this, 'red')" id="drugdetail" style="width: 200px; position: absolute; top: 175px; left:450px; ">Know My Drug</button> -->
+</div>
+<br><br>
+<div id="Protein" class="tabcontent">
+  <form name="ProteinForm" id="ProForm" method="POST" action=/protein_disease_predict>
+    <div class="form-group">
+      <label for="Protein1" align="left">Protein ID</label>
+      <input type="text" list="prot" multiple="multiple" class="form-control" name="Protein1">
+      <datalist id="prot">
+          {% for prot in proteins %}
+          <option value= "{{prot}}">{{prot}}</option>
+        {% endfor %}
+      </datalist>
+      
+    </div>
+    <br><br><br><br><br>
+    <!--<button type="submit" class="btn btn-danger" style="padding: 10px;" onclick="addproteins();">Add Protein IDs</button>-->
+    <button type="submit" class="btn btn-danger" style="padding: 10px;" name=form>Check</button>
+    <br><br><br>
+</form>
+</div>
+
+
+</div>
+
+</div>
+</div>
+<script>
+function openTab(tabName,elmnt,color) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+    }
+    document.getElementById(tabName).style.display = "block";
+    elmnt.style.backgroundColor = color;
+
+}
+
+function addproteins()
+{
+    var div = document.getElementById('Protein');
+    div.innerHTML += "<label for='Symptom' align='left'>Protein ID</label><input type='text' list='symp' multiple='multiple' class='form-control' name='Symptom4'><datalist id='symp'>{% for symp in symptoms %}<option value= '{{symp}}'>{{symp}}</option>{% endfor %}</datalist>";
+    div.innerHTML += "\n<br />";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+</center>
+    {% endblock %}
+  </body>
+</html>
