@@ -2,7 +2,7 @@ numpy
 pandas
 Flask
 Pillow
-csv
+python-csv
 torch
 torchvision
 gunicorn == 20.0.4
