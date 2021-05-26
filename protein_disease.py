@@ -18,7 +18,7 @@ y_pred=gnb.predict(X_test)
 indices = [i for i in range(4377)]
 proteins = df.columns.values[:-1]
 dictionary = dict(zip(proteins,indices))
-print(accuracy_score(y_test, y_pred)*100)
+# print(accuracy_score(y_test, y_pred)*100)
 
 
 def dosomething(protein):
